@@ -10,14 +10,12 @@ std::vector<GLfloat> Shape::readVertices(const char *verticesPath)
         throw std::runtime_error("Could not open file " + std::string(verticesPath));
     }
     std::vector<GLfloat> emptyVertices;
-
     GLfloat value;
     while (file >> value)
     {
-        emptyVertices.push_back(value);
+        emptyVertices.emplace_back(value);
     }
     file.close();
-
     return emptyVertices;
 }
 
@@ -29,11 +27,10 @@ std::vector<GLuint> Shape::readIndices(const char *indicesPath)
         throw std::runtime_error("Could not open file " + std::string(indicesPath));
     }
     std::vector<GLuint> emptyIndices;
-
     GLuint value;
     while (file >> value)
     {
-        emptyIndices.push_back(value);
+        emptyIndices.emplace_back(value);
     }
     file.close();
     return emptyIndices;

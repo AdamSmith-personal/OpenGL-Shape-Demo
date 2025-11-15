@@ -22,7 +22,7 @@ void createGUIFrame();
 void createGUI();
 void deleteGUI();
 void resetParameters();
-void initShapes(const std::vector<Shape>&);
+void constructShapes(const std::vector<Shape>&);
 void processInput(GLFWwindow *window);
 void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 
@@ -36,7 +36,7 @@ const unsigned int SCREEN_HEIGHT = 800;
 /* FILE PATHS */
 static const char *vertexShaderPath = "../Resources/Shaders/default.vert";
 static const char *fragmentShaderPath = "../Resources/Shaders/default.frag";
-/* SHAPE DATA PATHS */
+// Shape data files
 static const char *pyramidVerticesPath = "../Resources/Data/Vertices/pyramid.txt";
 static const char *pyramidIndicesPath = "../Resources/Data/Indices/pyramid.txt";
 static const char *cubeVerticesPath = "../Resources/Data/Vertices/cube.txt";
@@ -45,6 +45,8 @@ static const char *octahedronVerticesPath = "../Resources/Data/Vertices/octahedr
 static const char *octahedronIndicesPath = "../Resources/Data/Indices/octahedron.txt";
 static const char *octagonVerticesPath = "../Resources/Data/Vertices/octagon.txt";
 static const char *octagonIndicesPath = "../Resources/Data/Indices/octagon.txt";
+static const char *isocahedronVerticesPath = "../Resources/Data/Vertices/isocahedron.txt";
+static const char *isocahedronIndicesPath = "../Resources/Data/Indices/isocahedron.txt";
 
 /* Parameters */
 static float rotateX = 0.0f;
@@ -58,12 +60,15 @@ static glm::vec3 cameraPosition = glm::vec3(0.0f, 0.0f, -2.2f);
 static std::vector<Shape> shapes;
 static int currentShapeIndex = 0;
 
+
+
 int main()
 {
    glfwInit();
    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 4);
    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
 
    GLFWwindow *window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "OpenGL", NULL, NULL);
    if (window == NULL)
@@ -79,15 +84,20 @@ int main()
       std::cout << "Failed to initialize GLAD" << std::endl;
       return FAILURE;
    }
+
    Shader shaderProgram(vertexShaderPath, fragmentShaderPath);
    initializeGUI(window);
 
+
+
    while(!glfwWindowShouldClose(window))
    {
-      initShapes(shapes);
+      constructShapes(shapes);
       generateMatrices(shaderProgram);
       processInput(window);
       createGUIFrame();
+
+      glFrontFace(GL_CW);
       // clear the window color every frame
       glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
       // enable depth testing
@@ -112,12 +122,17 @@ int main()
    return SUCCESS;
 }
 
-void initShapes(const std::vector<Shape>&)
+/* Fills a vector with shape data from a file to be constructed. An improvement would be to put this in an array but
+ * for now it is fine.
+ */
+void constructShapes(const std::vector<Shape>&)
 {
+   shapes.reserve(5);
    shapes.emplace_back(cubeVerticesPath, cubeIndicesPath);
    shapes.emplace_back(pyramidVerticesPath, pyramidIndicesPath);
    shapes.emplace_back(octahedronVerticesPath, octahedronIndicesPath);
    shapes.emplace_back(octagonVerticesPath, octagonIndicesPath);
+   shapes.emplace_back(isocahedronVerticesPath, isocahedronIndicesPath);
 }
 
 void generateMatrices(Shader shaderProgram)
@@ -129,6 +144,7 @@ void generateMatrices(Shader shaderProgram)
    modelMatrix = glm::rotate(modelMatrix, glm::radians(rotateY),glm::vec3(0.0f,1.0f,0.0f));
    modelMatrix = glm::rotate(modelMatrix, glm::radians(rotateZ),glm::vec3(0.0f, 0.0f,1.0f));
 
+   // TODO: Make a more interesting camera that can "move around"
    glm::mat4 viewMatrix = glm::mat4(1.0);
    viewMatrix = glm::translate(viewMatrix, cameraPosition);
 
@@ -228,6 +244,10 @@ void resetParameters()
 void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
    if (action == GLFW_PRESS)
    {
+      if (key == GLFW_KEY_R)
+      {
+         resetParameters();
+      }
       if (key == GLFW_KEY_SPACE)
       {
          currentShapeIndex = (currentShapeIndex + 1) % shapes.size();
