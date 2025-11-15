@@ -45,8 +45,8 @@ static const char *octahedronVerticesPath = "../Resources/Data/Vertices/octahedr
 static const char *octahedronIndicesPath = "../Resources/Data/Indices/octahedron.txt";
 static const char *octagonVerticesPath = "../Resources/Data/Vertices/octagon.txt";
 static const char *octagonIndicesPath = "../Resources/Data/Indices/octagon.txt";
-static const char *isocahedronVerticesPath = "../Resources/Data/Vertices/isocahedron.txt";
-static const char *isocahedronIndicesPath = "../Resources/Data/Indices/isocahedron.txt";
+static const char *icosahedronVerticesPath = "../Resources/Data/Vertices/icosahedron.txt";
+static const char *icosahedronIndicesPath = "../Resources/Data/Indices/icosahedron.txt";
 
 /* Parameters */
 static float rotateX = 0.0f;
@@ -132,7 +132,7 @@ void constructShapes(const std::vector<Shape>&)
    shapes.emplace_back(pyramidVerticesPath, pyramidIndicesPath);
    shapes.emplace_back(octahedronVerticesPath, octahedronIndicesPath);
    shapes.emplace_back(octagonVerticesPath, octagonIndicesPath);
-   shapes.emplace_back(isocahedronVerticesPath, isocahedronIndicesPath);
+   shapes.emplace_back(icosahedronVerticesPath, icosahedronIndicesPath);
 }
 
 void generateMatrices(Shader shaderProgram)
