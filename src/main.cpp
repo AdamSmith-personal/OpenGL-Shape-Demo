@@ -38,6 +38,8 @@ const unsigned int WINDOW_HEIGHT = 700;
 static const char *vertexShaderPath = "../Resources/Shaders/default.vert";
 static const char *fragmentShaderPath = "../Resources/Shaders/default.frag";
 // Shape data files
+static const char *octagonVerticesPath = "../Resources/Data/Vertices/octagon.txt";
+static const char *octagonIndicesPath = "../Resources/Data/Indices/octagon.txt";
 static const char *pyramidVerticesPath = "../Resources/Data/Vertices/pyramid.txt";
 static const char *pyramidIndicesPath = "../Resources/Data/Indices/pyramid.txt";
 static const char *cubeVerticesPath = "../Resources/Data/Vertices/cube.txt";
@@ -56,9 +58,7 @@ static float rotateZ = 0.0f;
 static float fov = 45.0f;
 static glm::vec3 translation = glm::vec3(0.0f, 0.0f, 0.0f);
 static glm::vec3 scale = glm::vec3(0.6f, 0.6f, 0.6f);
-
 static glm::vec3 cameraPosition = glm::vec3(0.0f, 0.0f, -2.2f);
-
 
 static std::vector<Shape> shapes;
 static int currentShapeIndex = 0;
@@ -132,7 +132,8 @@ int main()
  */
 void constructShapes(const std::vector<Shape>&)
 {
-   shapes.reserve(5);
+   shapes.reserve(6);
+   shapes.emplace_back(octagonVerticesPath,octagonIndicesPath);
    shapes.emplace_back(cubeVerticesPath, cubeIndicesPath);
    shapes.emplace_back(pyramidVerticesPath, pyramidIndicesPath);
    shapes.emplace_back(octahedronVerticesPath, octahedronIndicesPath);
@@ -341,7 +342,6 @@ void processInput(GLFWwindow *window)
 /* Resize the viewport if the window gets resized */
 void frameBufferSizeCallback(GLFWwindow* window, int width, int height)
 {
-
    glViewport(0, 0, width, height);
 }
 
