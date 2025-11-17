@@ -67,6 +67,7 @@ Shape::Shape(const char *verticesPath, const char *indicesPath)
     indexCount = indices.size();
 }
 
+
 void Shape::Draw()
 {
     glBindVertexArray(VAO);
