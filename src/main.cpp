@@ -7,12 +7,7 @@
  * I cannot take full credit for the ShaderClass as it was created from a combination of a tutorial I was watching
  * and a online textbook. Both are linked below and I would not have been able to learn as much as I have about
  * how to use OpenGL without these resources. The code in the ShaderClass is just another encapsulation of OpenGL code
- * for readability purposes. I am also using a free library called IMGUI for the GUI which I will link below. I found there
- * library to be incredibly easy to use which is impressive because I have done some GUI programming in the past, and it gets
- * messy easily. Those classes are available in the project and I understand what they do. I want to learn
- * more in the future as I really enjoyed graphics programming. This project really challenged me and I feel I really grew as
- * a programmer while creating a complex project like this. I have made one other software in the past in my free time that I would
- * classify as an application and while making this I felt like I grew even more in my ability to build complex applications.
+ * for readability purposes. I am also using a free library called IMGUI for the GUI which I will link below.
  *
  * https://learnopengl.com/
  * https://www.youtube.com/watch?v=XpBGwZNyUh0&list=PLPaoO-vpZnumdcb4tZc4x5Q-v7CkrQ6M-&index=2
@@ -56,7 +51,9 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
 static const int SUCCESS = 0;
 static const int FAILURE = -1;
 
-const unsigned int WINDOW_WIDTH = 1200;
+// Defining a window size with a 16:10 aspect ratio since that is the aspect ratio of my laptop
+// eg). 1120/700 = 16/10
+const unsigned int WINDOW_WIDTH = 1120;
 const unsigned int WINDOW_HEIGHT = 700;
 
 
