@@ -1,12 +1,11 @@
 /* This is a program that uses some of the concepts from Linear Algebra
  * to rotate shapes on the screen using OpenGL. Vertex and indices data is loaded
  * from a file in a folder called "Data" in the "Resources" folder. The shaders are
- * also stored there. I created a Shape class which encapsulates reading the data from those
+ * also stored there in a folder called "Shaders. I created a Shape class which encapsulates reading the data from those
  * files and sending the data to buffers on the graphics card.
  *
  * I cannot take full credit for the ShaderClass as it was created from a combination of a tutorial I was watching
- * and a online textbook. Both are linked below and I would not have been able to learn as much as I have about
- * how to use OpenGL without these resources. The code in the ShaderClass is just another encapsulation of OpenGL code
+ * and a online textbook. Both are linked below. The code in the ShaderClass is just another encapsulation of OpenGL code
  * for readability purposes. I am also using a free library called IMGUI for the GUI which I will link below.
  *
  * https://learnopengl.com/
