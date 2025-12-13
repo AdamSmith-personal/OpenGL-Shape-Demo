@@ -19,9 +19,9 @@
  * Course: MTH341 Linear Algebra
 
 /* GUI */
-#include "../Header Files/imgui/imgui.h" // The GUI library itself
-#include "../Header Files/imgui/imgui_impl_glfw.h" // Need this since I am using GLFW for my window
-#include "../Header Files/imgui/imgui_impl_opengl3.h" // Need this since this is an OpenGL app
+#include "imgui/imgui.h"
+#include "imgui/imgui_impl_glfw.h"
+#include "imgui/imgui_impl_opengl3.h"
 /* OpenGL */
 #include <glad/glad.h> // glad
 #include <GLFW/glfw3.h> // software to create a window to render
