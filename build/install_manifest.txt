@@ -1,0 +1,17 @@
+/usr/local/bin/GraphicsDemo
+/usr/local/share/applications/graphicsdemo.desktop
+/usr/local/share/icons/hicolor/512x512/apps/icon.png
+/usr/local/share/GraphicsDemo/assets/data/Vertices/octahedron.txt
+/usr/local/share/GraphicsDemo/assets/data/Vertices/icosahedron.txt
+/usr/local/share/GraphicsDemo/assets/data/Vertices/octagon.txt
+/usr/local/share/GraphicsDemo/assets/data/Vertices/dodecahedron.txt
+/usr/local/share/GraphicsDemo/assets/data/Vertices/pyramid.txt
+/usr/local/share/GraphicsDemo/assets/data/Vertices/cube.txt
+/usr/local/share/GraphicsDemo/assets/data/Indices/octahedron.txt
+/usr/local/share/GraphicsDemo/assets/data/Indices/icosahedron.txt
+/usr/local/share/GraphicsDemo/assets/data/Indices/octagon.txt
+/usr/local/share/GraphicsDemo/assets/data/Indices/dodecahedron.txt
+/usr/local/share/GraphicsDemo/assets/data/Indices/pyramid.txt
+/usr/local/share/GraphicsDemo/assets/data/Indices/cube.txt
+/usr/local/share/GraphicsDemo/assets/shaders/default.frag
+/usr/local/share/GraphicsDemo/assets/shaders/default.vert
