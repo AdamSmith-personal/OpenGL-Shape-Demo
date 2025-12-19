@@ -1,7 +1,7 @@
 /* This is a program that uses some of the concepts from Linear Algebra
  * to rotate shapes on the screen using OpenGL. Vertex and indices data is loaded
- * from a file in a folder called "Data" in the "Resources" folder. The shaders are
- * also stored there in a folder called "Shaders. I created a Shape class which encapsulates reading the data from those
+ * from a file in a folder called "data" in the "assets" folder. The shaders are
+ * also stored there in a folder called "shaders. I created a Shape class which encapsulates reading the data from those
  * files and sending the data to buffers on the graphics card.
  *
  * I cannot take full credit for the ShaderClass as it was created from a combination of a tutorial I was watching
@@ -19,24 +19,24 @@
  * Course: MTH341 Linear Algebra
 
 /* GUI */
-#include "imgui/imgui.h"
-#include "imgui/imgui_impl_glfw.h"
-#include "imgui/imgui_impl_opengl3.h"
-/* OpenGL */
-#include <glad/glad.h> // glad
+#include <glad/glad.h>
 #include <GLFW/glfw3.h> // software to create a window to render
 #include <glm/glm.hpp> // OpenGL Mathematics library (eg. matrices/mat4s, vectors/vec4s)
 #include <iostream> // Basic C++ I/O
 #include <vector> // C++ Vectors/Linked Lists
 #include <glm/gtc/matrix_transform.hpp> // eg). contains all the different types of transformation matrices for graphics
 #include <glm/gtc/type_ptr.hpp> // to get a pointer to my matrices/vectors
-/*  Classes */
-#include "../Header Files/ShaderClass.h" // A class to easily load shader files
-#include "../Header Files/Shape.h" // A class to create shapes that get there data from a file.
+#include "../external/imgui/imgui.h"
+#include "../external/imgui/imgui_impl_glfw.h"
+#include "../external/imgui/imgui_impl_opengl3.h"
+#include "../include/ShaderClass.h" // A class to easily load shader files
+#include "../include/Shape.h" // A class to create shapes that get there data from a file.
+
+#define ASSET_PATH "/usr/local/share/GraphicsDemo/assets"
 
 /* PROTYPES */
 void frameBufferSizeCallback(GLFWwindow *window, int width, int height);
-void generateMatrices(Shader shaderProgram);
+void generateMatrices(const unsigned int WINDOW_WIDTH, const unsigned int WINDOW_HEIGHT, Shader shaderProgram);
 void initializeGUI(GLFWwindow *window);
 void createGUIFrame();
 void createGUI();
@@ -50,28 +50,22 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
 static const int SUCCESS = 0;
 static const int FAILURE = -1;
 
-// Defining a window size with a 16:10 aspect ratio since that is the aspect ratio of my laptop
-// eg). 1120/700 = 16/10
-const unsigned int WINDOW_WIDTH = 1120;
-const unsigned int WINDOW_HEIGHT = 700;
-
-
-/* FILE PATHS */
-static const char *vertexShaderPath = "../Resources/Shaders/default.vert";
-static const char *fragmentShaderPath = "../Resources/Shaders/default.frag";
-// Shape data files
-static const char *octagonVerticesPath = "../Resources/Data/Vertices/octagon.txt";
-static const char *octagonIndicesPath = "../Resources/Data/Indices/octagon.txt";
-static const char *pyramidVerticesPath = "../Resources/Data/Vertices/pyramid.txt";
-static const char *pyramidIndicesPath = "../Resources/Data/Indices/pyramid.txt";
-static const char *cubeVerticesPath = "../Resources/Data/Vertices/cube.txt";
-static const char *cubeIndicesPath = "../Resources/Data/Indices/cube.txt";
-static const char *octahedronVerticesPath = "../Resources/Data/Vertices/octahedron.txt";
-static const char *octahedronIndicesPath = "../Resources/Data/Indices/octahedron.txt";
-static const char *icosahedronVerticesPath = "../Resources/Data/Vertices/icosahedron.txt";
-static const char *icosahedronIndicesPath = "../Resources/Data/Indices/icosahedron.txt";
-static const char *dodecahedronVerticesPath = "../Resources/Data/Vertices/dodecahedron.txt";
-static const char *dodecahedronIndicesPath = "../Resources/Data/Indices/dodecahedron.txt";
+// shader paths
+static const char *vertexShaderPath = ASSET_PATH "/shaders/default.vert";
+static const char *fragmentShaderPath = ASSET_PATH "/shaders/default.frag";
+// vertices/indices paths
+static const char *octagonVerticesPath = ASSET_PATH "/data/Vertices/octagon.txt";
+static const char *octagonIndicesPath = ASSET_PATH "/data/Indices/octagon.txt";
+static const char *pyramidVerticesPath = ASSET_PATH "/data/Vertices/pyramid.txt";
+static const char *pyramidIndicesPath = ASSET_PATH "/data/Indices/pyramid.txt";
+static const char *cubeVerticesPath = ASSET_PATH "/data/Vertices/cube.txt";
+static const char *cubeIndicesPath = ASSET_PATH "/data/Indices/cube.txt";
+static const char *octahedronVerticesPath = ASSET_PATH "/data/Vertices/octahedron.txt";
+static const char *octahedronIndicesPath = ASSET_PATH "/data/Indices/octahedron.txt";
+static const char *icosahedronVerticesPath = ASSET_PATH "/data/Vertices/icosahedron.txt";
+static const char *icosahedronIndicesPath = ASSET_PATH "/data/Indices/icosahedron.txt";
+static const char *dodecahedronVerticesPath = ASSET_PATH "/data/Vertices/dodecahedron.txt";
+static const char *dodecahedronIndicesPath = ASSET_PATH "/data/Indices/dodecahedron.txt";
 
 /* Parameters */
 static float rotateX = 0.0f;
@@ -100,10 +94,30 @@ int main()
    // initialize glfw
    glfwInit();
    // Use window hints to tell glfw some information
-   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 4);
+   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
    glfwWindowHint(GLFW_SAMPLES, 4);
+
+   GLFWmonitor *monitor = glfwGetPrimaryMonitor();
+   if (monitor == NULL)
+   {
+      std::cout << "Could not find primary montior" << std::endl;
+      glfwTerminate();
+      return FAILURE;
+   }
+   const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+
+   if (mode == NULL)
+   {
+      std::cout << "Could not get the monitors video mode" << std::endl;
+      glfwTerminate();
+      return FAILURE;
+   }
+   // Creates a window 1/2 the size of the users monitor
+   const unsigned int WINDOW_WIDTH = static_cast<float>(mode->width)/2;
+   const unsigned int WINDOW_HEIGHT = static_cast<float>(mode->height)/2;
+
    // create the window
    GLFWwindow *window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "OpenGL", NULL, NULL);
    // Handle errors
@@ -132,7 +146,7 @@ int main()
       // fill the shapes vector with all my shapes
       constructShapes(shapes);
       // generate the matrices and send them to the vertex shader
-      generateMatrices(shaderProgram);
+      generateMatrices(WINDOW_WIDTH, WINDOW_HEIGHT, shaderProgram);
       // process any keyboard input
       processInput(window);
       // create the frame for the GUI
@@ -187,7 +201,7 @@ void constructShapes(const std::vector<Shape>&)
  * A function that I use to create my model, view, and projection matrix
  * before sending the data to the vertex shader.
  */
-void generateMatrices(Shader shaderProgram)
+void generateMatrices(const unsigned int WINDOW_WIDTH, const unsigned int WINDOW_HEIGHT, Shader shaderProgram)
 {
    // the model matrix.. which is a combination of scale, translation, and rotation matrices
    glm::mat4 modelMatrix = glm::mat4(1.0f);

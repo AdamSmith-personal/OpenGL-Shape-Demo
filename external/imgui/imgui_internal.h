@@ -15,7 +15,7 @@ Index of this file:
 // [SECTION] Generic helpers
 // [SECTION] ImDrawList support
 // [SECTION] Style support
-// [SECTION] Data types support
+// [SECTION] data types support
 // [SECTION] Widgets support: flags, enums, data structures
 // [SECTION] Popup support
 // [SECTION] Inputs support
@@ -140,9 +140,9 @@ struct ImGuiTextIndex;              // Maintain a line index for a text buffer.
 
 // ImDrawList/ImFontAtlas
 struct ImDrawDataBuilder;           // Helper to build a ImDrawData instance
-struct ImDrawListSharedData;        // Data shared between all ImDrawList instances
+struct ImDrawListSharedData;        // data shared between all ImDrawList instances
 struct ImFontAtlasBuilder;          // Internal storage for incrementally packing and building a ImFontAtlas
-struct ImFontAtlasPostProcessData;  // Data available to potential texture post-processing functions
+struct ImFontAtlasPostProcessData;  // data available to potential texture post-processing functions
 struct ImFontAtlasRectEntry;        // Packed rectangle lookup entry
 
 // ImGui
@@ -151,7 +151,7 @@ struct ImGuiColorMod;               // Stacked color modifier, backup of modifie
 struct ImGuiContext;                // Main Dear ImGui context
 struct ImGuiContextHook;            // Hook for extensions like ImGuiTestEngine
 struct ImGuiDataTypeInfo;           // Type information associated to a ImGuiDataType enum
-struct ImGuiDeactivatedItemData;    // Data for IsItemDeactivated()/IsItemDeactivatedAfterEdit() function.
+struct ImGuiDeactivatedItemData;    // data for IsItemDeactivated()/IsItemDeactivatedAfterEdit() function.
 struct ImGuiErrorRecoveryState;     // Storage of stack sizes for error handling and recovery
 struct ImGuiGroupData;              // Stacked storage data for BeginGroup()/EndGroup()
 struct ImGuiInputTextState;         // Internal state of the currently focused/edited text input box
@@ -846,7 +846,7 @@ IMGUI_API ImGuiStoragePair* ImLowerBound(ImGuiStoragePair* in_begin, ImGuiStorag
 #endif
 #define IM_DRAWLIST_ARCFAST_SAMPLE_MAX                          IM_DRAWLIST_ARCFAST_TABLE_SIZE // Sample index _PathArcToFastEx() for 360 angle.
 
-// Data shared between all ImDrawList instances
+// data shared between all ImDrawList instances
 // Conceptually this could have been called e.g. ImDrawListSharedContext
 // Typically one ImGui context would create and maintain one of this.
 // You may want to create your own instance of you try to ImDrawList completely without ImGui. In that case, watch out for future changes to this structure.
@@ -911,7 +911,7 @@ struct ImGuiColorMod
     ImVec4          BackupValue;
 };
 
-// Stacked style modifier, backup of modified data so we can restore it. Data type inferred from the variable.
+// Stacked style modifier, backup of modified data so we can restore it. data type inferred from the variable.
 struct ImGuiStyleMod
 {
     ImGuiStyleVar   VarIdx;
@@ -922,7 +922,7 @@ struct ImGuiStyleMod
 };
 
 //-----------------------------------------------------------------------------
-// [SECTION] Data types support
+// [SECTION] data types support
 //-----------------------------------------------------------------------------
 
 struct ImGuiDataTypeStorage
@@ -1227,7 +1227,7 @@ struct IMGUI_API ImGuiInputTextState
     ImGuiInputTextFlags     Flags;                  // copy of InputText() flags. may be used to check if e.g. ImGuiInputTextFlags_Password is set.
     ImGuiID                 ID;                     // widget id owning the text state
     int                     TextLen;                // UTF-8 length of the string in TextA (in bytes)
-    const char*             TextSrc;                // == TextA.Data unless read-only, in which case == buf passed to InputText(). Field only set and valid _inside_ the call InputText() call.
+    const char*             TextSrc;                // == TextA.data unless read-only, in which case == buf passed to InputText(). Field only set and valid _inside_ the call InputText() call.
     ImVector<char>          TextA;                  // main UTF8 buffer. TextA.Size is a buffer size! Should always be >= buf_size passed by user (and of course >= CurLenA + 1).
     ImVector<char>          TextToRevertTo;         // value to revert to when pressing Escape = backup of end-user buffer at the time of focus (in UTF-8, unaltered)
     ImVector<char>          CallbackTextBackup;     // temporary storage for callback to support automatic reconcile of undo-stack
@@ -1405,7 +1405,7 @@ struct IMGUI_API ImGuiErrorRecoveryState
     ImGuiErrorRecoveryState() { memset(this, 0, sizeof(*this)); }
 };
 
-// Data saved for each window pushed into the stack
+// data saved for each window pushed into the stack
 struct ImGuiWindowStackData
 {
     ImGuiWindow*            Window;
@@ -1431,7 +1431,7 @@ struct ImGuiPtrOrIndex
     ImGuiPtrOrIndex(int index)  { Ptr = NULL; Index = index; }
 };
 
-// Data used by IsItemDeactivated()/IsItemDeactivatedAfterEdit() functions
+// data used by IsItemDeactivated()/IsItemDeactivatedAfterEdit() functions
 struct ImGuiDeactivatedItemData
 {
     ImGuiID     ID;
@@ -2458,7 +2458,7 @@ struct ImGuiContext
     ImGuiTypingSelectState  TypingSelectState;                  // State for GetTypingSelectRequest()
 
     // Platform support
-    ImGuiPlatformImeData    PlatformImeData;                    // Data updated by current frame. Will be applied at end of the frame. For some backends, this is required to have WantVisible=true in order to receive text message.
+    ImGuiPlatformImeData    PlatformImeData;                    // data updated by current frame. Will be applied at end of the frame. For some backends, this is required to have WantVisible=true in order to receive text message.
     ImGuiPlatformImeData    PlatformImeDataPrev;                // Previous frame data. When changed we call the platform_io.Platform_SetImeDataFn() handler.
 
     // Extensions
@@ -3617,7 +3617,7 @@ namespace ImGui
     template<typename T>                                        IMGUI_API T     RoundScalarWithFormatT(const char* format, ImGuiDataType data_type, T v);
     template<typename T>                                        IMGUI_API bool  CheckboxFlagsT(const char* label, T* flags, T flags_value);
 
-    // Data type helpers
+    // data type helpers
     IMGUI_API const ImGuiDataTypeInfo*  DataTypeGetInfo(ImGuiDataType data_type);
     IMGUI_API int           DataTypeFormatString(char* buf, int buf_size, ImGuiDataType data_type, const void* p_data, const char* format);
     IMGUI_API void          DataTypeApplyOp(ImGuiDataType data_type, int op, void* output, const void* arg_1, const void* arg_2);
@@ -3782,7 +3782,7 @@ struct ImFontAtlasRectEntry
     unsigned int        IsUsed : 1;
 };
 
-// Data available to potential texture post-processing functions
+// data available to potential texture post-processing functions
 struct ImFontAtlasPostProcessData
 {
     ImFontAtlas*        FontAtlas;

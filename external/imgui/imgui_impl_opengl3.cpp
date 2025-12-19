@@ -227,7 +227,7 @@
 #define GL_CALL(_CALL)      _CALL   // Call without error check
 #endif
 
-// OpenGL Data
+// OpenGL data
 struct ImGui_ImplOpenGL3_Data
 {
     GLuint          GlVersion;               // Extracted at runtime using GL_MAJOR_VERSION, GL_MINOR_VERSION queries (e.g. 320 for GL 3.2)

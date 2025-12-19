@@ -10,7 +10,7 @@ Index of this file:
 // [SECTION] Widgets: Main (Button, Image, Checkbox, RadioButton, ProgressBar, Bullet, etc.)
 // [SECTION] Widgets: Low-level Layout helpers (Spacing, Dummy, NewLine, Separator, etc.)
 // [SECTION] Widgets: ComboBox
-// [SECTION] Data Type and Data Formatting Helpers
+// [SECTION] data Type and data Formatting Helpers
 // [SECTION] Widgets: DragScalar, DragFloat, DragInt, etc.
 // [SECTION] Widgets: SliderScalar, SliderFloat, SliderInt, etc.
 // [SECTION] Widgets: InputScalar, InputFloat, InputInt, etc.
@@ -95,7 +95,7 @@ Index of this file:
 #endif
 
 //-------------------------------------------------------------------------
-// Data
+// data
 //-------------------------------------------------------------------------
 
 // Widgets
@@ -2216,7 +2216,7 @@ bool ImGui::Combo(const char* label, int* current_item, bool (*old_getter)(void*
 #endif
 
 //-------------------------------------------------------------------------
-// [SECTION] Data Type and Data Formatting Helpers [Internal]
+// [SECTION] data Type and data Formatting Helpers [Internal]
 //-------------------------------------------------------------------------
 // - DataTypeGetInfo()
 // - DataTypeFormatString()
@@ -2665,7 +2665,7 @@ bool ImGui::DragBehavior(ImGuiID id, ImGuiDataType data_type, void* p_v, float v
 }
 
 // Note: p_data, p_min and p_max are _pointers_ to a memory address holding the data. For a Drag widget, p_min and p_max are optional.
-// Read code of e.g. DragFloat(), DragInt() etc. or examples in 'Demo->Widgets->Data Types' to understand how to use this function directly.
+// Read code of e.g. DragFloat(), DragInt() etc. or examples in 'Demo->Widgets->data Types' to understand how to use this function directly.
 bool ImGui::DragScalar(const char* label, ImGuiDataType data_type, void* p_data, float v_speed, const void* p_min, const void* p_max, const char* format, ImGuiSliderFlags flags)
 {
     ImGuiWindow* window = GetCurrentWindow();
@@ -3269,7 +3269,7 @@ bool ImGui::SliderBehavior(const ImRect& bb, ImGuiID id, ImGuiDataType data_type
 }
 
 // Note: p_data, p_min and p_max are _pointers_ to a memory address holding the data. For a slider, they are all required.
-// Read code of e.g. SliderFloat(), SliderInt() etc. or examples in 'Demo->Widgets->Data Types' to understand how to use this function directly.
+// Read code of e.g. SliderFloat(), SliderInt() etc. or examples in 'Demo->Widgets->data Types' to understand how to use this function directly.
 bool ImGui::SliderScalar(const char* label, ImGuiDataType data_type, void* p_data, const void* p_min, const void* p_max, const char* format, ImGuiSliderFlags flags)
 {
     ImGuiWindow* window = GetCurrentWindow();
@@ -3737,7 +3737,7 @@ void ImGui::SetNextItemRefVal(ImGuiDataType data_type, void* p_data)
 }
 
 // Note: p_data, p_step, p_step_fast are _pointers_ to a memory address holding the data. For an Input widget, p_step and p_step_fast are optional.
-// Read code of e.g. InputFloat(), InputInt() etc. or examples in 'Demo->Widgets->Data Types' to understand how to use this function directly.
+// Read code of e.g. InputFloat(), InputInt() etc. or examples in 'Demo->Widgets->data Types' to understand how to use this function directly.
 bool ImGui::InputScalar(const char* label, ImGuiDataType data_type, void* p_data, const void* p_step, const void* p_step_fast, const char* format, ImGuiInputTextFlags flags)
 {
     ImGuiWindow* window = GetCurrentWindow();
@@ -4744,7 +4744,7 @@ bool ImGui::InputTextEx(const char* label, const char* hint, char* buf, int buf_
         IM_ASSERT(new_len + 1 <= buf_size && "Is your input buffer properly zero-terminated?");
         state->WantReloadUserBuf = false;
         InputTextReconcileUndoState(state, state->TextA.Data, state->TextLen, buf, new_len);
-        state->TextA.resize(buf_size + 1); // we use +1 to make sure that .Data is always pointing to at least an empty string.
+        state->TextA.resize(buf_size + 1); // we use +1 to make sure that .data is always pointing to at least an empty string.
         state->TextLen = new_len;
         memcpy(state->TextA.Data, buf, state->TextLen + 1);
         state->Stb->select_start = state->ReloadSelectionStart;
@@ -4764,7 +4764,7 @@ bool ImGui::InputTextEx(const char* label, const char* hint, char* buf, int buf_
         // From the moment we focused we are normally ignoring the content of 'buf' (unless we are in read-only mode)
         const int buf_len = (int)ImStrlen(buf);
         IM_ASSERT(((buf_len + 1 <= buf_size) || (buf_len == 0 && buf_size == 0)) && "Is your input buffer properly zero-terminated?");
-        state->TextToRevertTo.resize(buf_len + 1);    // UTF-8. we use +1 to make sure that .Data is always pointing to at least an empty string.
+        state->TextToRevertTo.resize(buf_len + 1);    // UTF-8. we use +1 to make sure that .data is always pointing to at least an empty string.
         memcpy(state->TextToRevertTo.Data, buf, buf_len + 1);
 
         // Preserve cursor position and undo/redo stack if we come back to same widget
@@ -4778,7 +4778,7 @@ bool ImGui::InputTextEx(const char* label, const char* hint, char* buf, int buf_
         state->TextLen = buf_len;
         if (!is_readonly)
         {
-            state->TextA.resize(buf_size + 1); // we use +1 to make sure that .Data is always pointing to at least an empty string.
+            state->TextA.resize(buf_size + 1); // we use +1 to make sure that .data is always pointing to at least an empty string.
             memcpy(state->TextA.Data, buf, state->TextLen + 1);
         }
 
