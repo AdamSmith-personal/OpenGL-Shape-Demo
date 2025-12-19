@@ -1,8 +1,0 @@
-[Desktop Entry]
-Name=MyGraphicsProgram
-Comment=My OpenGL demo
-Exec=GraphicsDemo
-Icon=icon
-Terminal=false
-Type=Application
-Categories=Graphics;Utility;
